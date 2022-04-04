@@ -1,15 +1,16 @@
 package com.account_service.models;
 
-import java.util.UUID;
+//import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 // import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.GenericGenerator;
+//import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -20,18 +21,18 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(Include.NON_NULL)
 public class AccountServiceModel {
 	@Id
-//  @GeneratedValue(strategy = GenerationType.AUTO)
-    @GeneratedValue(generator = "uuid2")
-	@GenericGenerator(name = "uuid2", strategy = "uuid2")
-//	@Column(name = "id", columnDefinition = "INT", insertable = false, updatable = false)
-	@Column(name = "id", columnDefinition = "VARCHAR(36)", insertable = false, updatable = false)
-	@Type(type = "uuid-char")
-    private UUID id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+//    @GeneratedValue(generator = "uuid2")
+//	@GenericGenerator(name = "uuid2", strategy = "uuid2")
+	@Column(name = "id", columnDefinition = "INT", insertable = false, updatable = false)
+//	@Column(name = "id", columnDefinition = "VARCHAR(36)", insertable = false, updatable = false)
+//	@Type(type = "uuid-char")
+    private int id;
 	@Column(name = "name", columnDefinition = "VARCHAR(50)",
 			nullable = false)
     private String name;
 	@Column(name = "email", columnDefinition = "VARCHAR(50)",
-			nullable = false)
+			nullable = false, unique=true)
     private String email;
 	@Column(name = "password", columnDefinition = "VARCHAR(50)",
 			nullable = false)
@@ -42,7 +43,7 @@ public class AccountServiceModel {
 
     public AccountServiceModel() {  }
 
-    public AccountServiceModel(UUID id, String name, String email, String password, Boolean locked) {
+    public AccountServiceModel(int id, String name, String email, String password, Boolean locked) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -62,11 +63,11 @@ public class AccountServiceModel {
         this.setLocked(locked);
     }
 
-    public UUID getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(int id) {
         this.id = id;
     }
 
